@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gambit Test Tool</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      margin: 16px;
+      line-height: 1.5;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 8px 16px;
+      margin-bottom: 12px;
+    }
+
+    label {
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    select,
+    input[type="number"] {
+      padding: 4px 6px;
+      font-size: 0.85rem;
+    }
+
+    #log {
+      margin-top: 16px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fafafa;
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+    }
+
+    .skill-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .skill-row input[type="number"] {
+      width: 60px;
+    }
+
+    .skill-info {
+      font-size: 0.78rem;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h1>ガンビット試走ツール</h1>
+
+    <h2>基本設定</h2>
+    <div class="form-grid">
+      <label>
+        モンスター
+        <select id="monsterSelect"></select>
+      </label>
+
+      <label>
+        性格（Nature）
+        <select id="natureSelect"></select>
+      </label>
+
+      <label>
+        ムード（Mood）
+        <select id="moodSelect"></select>
+      </label>
+    </div>
+
+    <h2>アピール</h2>
+    <div class="skill-row">
+      <label>
+        使用回数
+        <input id="skillUses" type="number" min="0" value="0" />
+      </label>
+      <div id="skillInfo" class="skill-info">
+        ※アピール情報がここに表示されます
+      </div>
+    </div>
+
+    <h2>ガンビット設定</h2>
+    <div>
+      <label for="gambit1Select">ガンビット1:</label>
+      <select id="gambit1Select"></select>
+    </div>
+    <div>
+      <label for="gambit2Select">ガンビット2:</label>
+      <select id="gambit2Select"></select>
+    </div>
+    <div>
+      <label for="gambit3Select">ガンビット3:</label>
+      <select id="gambit3Select"></select>
+    </div>
+
+    <h2>ステージ構成</h2>
+    <div>
+      <label for="stage1Select">ステージ1:</label>
+      <select id="stage1Select"></select>
+    </div>
+    <div>
+      <label for="stage2Select">ステージ2:</label>
+      <select id="stage2Select"></select>
+    </div>
+    <div>
+      <label for="stage3Select">ステージ3:</label>
+      <select id="stage3Select"></select>
+    </div>
+
+    <h2>審査員</h2>
+    <div class="form-grid">
+      <label>
+        審査員1
+        <select id="judge1Select"></select>
+      </label>
+
+      <label>
+        審査員2
+        <select id="judge2Select"></select>
+      </label>
+
+      <label>
+        審査員3
+        <select id="judge3Select"></select>
+      </label>
+    </div>
+
+    
+
+    <h2>ログ</h2>
+    <pre id="log"></pre>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
