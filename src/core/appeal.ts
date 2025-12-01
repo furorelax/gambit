@@ -1,6 +1,7 @@
 // src/core/appeal.ts
 import type { BaseStats } from "./types";
 import { STAT_LABELS } from "./types";
+import type { MonsterPhaseId, MonsterUnlockCondition } from "./monster";
 
 /**
  * アピール ID

@@ -24,7 +24,6 @@ import { JUDGES, type JudgeId, type JudgeProfile } from "./core/judge";
 import {
   GAMBITS,
   type GambitId,
-  type GambitProfile,
   getGambitById,
   applyGambitToStats,
   formatGambitMultipliers,
@@ -67,7 +66,7 @@ let state: State;
 // --------- 小物ユーティリティ ---------
 
 function $(selector: string): HTMLElement | null {
-  return document.querySelector < HTMLElement > (selector);
+  return document.querySelector<HTMLElement>(selector);
 }
 
 function getTemplateById(id: string) {
@@ -99,7 +98,8 @@ function calcScoreWithStage(
   let total = 0;
 
   (Object.keys(judge.weights) as (keyof BaseStats)[]).forEach((key) => {
-    const w = judge.weights[key];
+    // 修正前: const w = judge.weights[key];
+    const w = judge.weights[key] ?? 0; // ← 0 にフォールバック
     const stageMul = stage?.bias[key] ?? 1;
     total += stats[key] * w * stageMul;
   });
@@ -147,16 +147,15 @@ function initSelectors(): void {
     return;
   }
 
-  const defaultTemplate = SAMPLE_TEMPLATES[0];
+  const defaultTemplate = SAMPLE_TEMPLATES[0]!;
 
   const defaultJudgeIds: JudgeId[] = JUDGES.slice(0, 3).map((j) => j.id);
   const defaultStageIds: StageId[] = STAGES.slice(0, 3).map((s) => s.id);
   const fallbackStageId: StageId =
     (defaultStageIds[0] as StageId) ?? ("standard" as StageId);
 
-  const defaultGambitIds: GambitId[] = GAMBITS.slice(0, 3).map((g) => g.id);
   const noneGambit =
-    GAMBITS.find((g) => g.id === ("none" as GambitId)) ?? GAMBITS[0];
+    GAMBITS.find((g) => g.id === ("none" as GambitId)) ?? GAMBITS[0]!;
   const fallbackGambitId: GambitId = noneGambit.id as GambitId;
 
   state = {
@@ -175,9 +174,9 @@ function initSelectors(): void {
       stage3: defaultStageIds[2] ?? fallbackStageId,
     },
     judges: {
-      judge1: defaultJudgeIds[0],
-      judge2: defaultJudgeIds[1] ?? defaultJudgeIds[0],
-      judge3: defaultJudgeIds[2] ?? defaultJudgeIds[0],
+      judge1: defaultJudgeIds[0]!,
+      judge2: (defaultJudgeIds[1] ?? defaultJudgeIds[0])!,
+      judge3: (defaultJudgeIds[2] ?? defaultJudgeIds[0])!,
     },
   };
 
@@ -366,7 +365,7 @@ function updateMoodOptions(): void {
 
   // 万一 state.moodId が不正ならデフォルトに戻す
   if (!ALL_MOOD_IDS.includes(state.moodId)) {
-    state.moodId = ALL_MOOD_IDS[0];
+    state.moodId = ALL_MOOD_IDS[0]!;
   }
 
   moodSelect.value = state.moodId;
@@ -540,8 +539,7 @@ function render(): void {
   // 合計スコアはコメントアウトで残す
   // lines.push(`全ステージ合計スコア: ${grandTotal.toFixed(1)}`);
 
-  const averageScore =
-    validStageCount > 0 ? grandTotal / validStageCount : 0;
+  const averageScore = validStageCount > 0 ? grandTotal / validStageCount : 0;
   lines.push(`平均ステージスコア: ${averageScore.toFixed(1)}`);
 
   logEl.textContent = lines.join("\n");
